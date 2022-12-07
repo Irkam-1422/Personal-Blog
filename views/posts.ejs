@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('./partials/head.ejs') %>
+<body>
+    <%- include('./partials/header.ejs') %>
+
+    <h1>POSTS:</h1>
+    <ul>
+        <% if (posts.length) { %>
+            <% posts.forEach(({id,title,createdAt,text,author}) => { %>
+                <li class="post">
+                    <footer>
+                        <a href="posts/<%= id %>"><h2><%= title %></h2></a>
+                        <button class="icon" data-id="<%= id %>">
+                            <i class="fa-solid fa-trash" data-id="<%= id %>"></i>
+                        </button>
+                    </footer>
+                    <!-- <h2>Post title</h2> -->
+                    <div class="post-text">
+                        <%= text %>
+                    </div>
+                    <footer>
+                        <div class="footer_div">
+                            <%= createdAt.toLocaleDateString() %>
+                        </div>
+                        <div class="footer_div">
+                            <%= author %>
+                        </div>
+                    </footer>
+                </li>
+            <% }) %>
+        <% } %>
+    </ul>
+
+    <script>
+        document.addEventListener('click', (e) => {
+            const id = e.target?.dataset?.id || null
+            if (id) {
+                fetch(`/posts/${id}`, {
+                    method: 'DELETE'
+                }).then(() => {
+                    window.location.reload()
+                })
+            }
+        })
+    </script>
+    <!-- <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+            font-weight: 100;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            align-items: center;
+            /* justify-content: center; */
+            flex-direction: column;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 40px;
+            background: linear-gradient(to bottom, #00d2ff, #928dab);
+            color: aliceblue;
+            font-weight: 100;
+        }
+
+        h1 {
+            text-transform: uppercase;
+        }
+
+        header {
+            background: #133449;
+            opacity: 0.75;
+            width: 100%;
+            height: 72px;
+            display: flex;
+            flex-direction: row-reverse;
+        }
+
+        button {
+            font-size: 20px;
+            color: white;
+            border: none;
+            background: #133449;
+            margin: 20px;
+            font-weight: 100;
+        }
+
+        h1 {
+            align-self: baseline;
+            font-size: 40px;
+            margin: 15px;
+        }
+
+        .post {
+            padding: 20px;
+            font-size: 20px;
+            background: #1334497a;
+            margin: 15px;
+        }
+
+        h2 {
+            color: aqua;
+        }
+
+        .post-text {
+            margin: 19px 0;
+        }
+
+        footer {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        a {
+            text-decoration: none;
+            color: aliceblue;
+            font-family: 'Montserrat', sans-serif;
+        }
+    </style> -->
+</body>
+</html>

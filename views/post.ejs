@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('./partials/head.ejs') %>
+    <!-- <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400&display=swap" rel="stylesheet">
+        <title>Post</title>
+        <link rel="stylesheet" href="/styles.css">
+    </head> -->
+<body>
+    <%- include('./partials/header.ejs') %>
+
+
+    <footer>
+        <div class="footer_elem">
+            <div class="footer_div">
+                <%=  post.date || post.createdAt.toLocaleDateString() %>
+            </div>
+            <div class="footer_div">
+                <%= post.author %>
+            </div>
+        </div>
+
+        <div class="footer_elem icons">
+            <a href="/edit/<%= post.id %>" class="edit icon-inside">
+                <i class="fa-solid fa-pen-to-square"></i>
+            </a>
+            <button class="icon-inside" data-id="<%= post.id %>">
+                <i class="fa-solid fa-trash" data-id="<%= post.id %>"></i>
+            </button>
+        </div>
+    </footer>
+    <h2> <%= post.title %></h2>
+        <div class="post-text-inside">
+            <%= post.text %>
+        </div>
+
+        <script>
+            document.addEventListener('click', (e) => {
+                const id = e.target?.dataset?.id || null
+                if (id) {
+                    fetch(`/posts/${id}`, {
+                        method: 'DELETE'
+                    }).then(() => {
+                        window.location.href = '/posts'
+                    })
+                }
+            })
+        </script>
+
+    <!-- <style>
+        body {
+            padding-top: 80px;
+            min-height: 100vh;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+            background: linear-gradient(to bottom, #00d2ff, #928dab);
+            color: aliceblue;
+        }
+
+        header {
+            background: #133449;
+            opacity: 0.75;
+            width: 100%;
+            height: 72px;
+            display: flex;
+            flex-direction: row-reverse;
+        }
+
+        button {
+            font-size: 20px;
+            color: white;
+            border: none;
+            background: #133449;
+            margin: 20px;
+            font-weight: 100;
+        }
+        a {
+            text-decoration: none;
+            color: aliceblue;
+            font-family: 'Montserrat', sans-serif;
+        }
+    </style> -->
+</body>
+</html>
